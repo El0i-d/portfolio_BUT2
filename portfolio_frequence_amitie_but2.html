@@ -1,0 +1,1232 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio BUT2 - Fréquence Amitié</title>
+  <style>
+    :root {
+      --primary: #31A8E0;
+      --primary-strong: #0F8CC7;
+      --primary-soft: #DDF4FF;
+      --bg: #F5F8FB;
+      --surface: rgba(255, 255, 255, 0.88);
+      --surface-solid: #FFFFFF;
+      --ink: #232020;
+      --ink-strong: #171414;
+      --ink-mid: #3B3737;
+      --muted: #625F5F;
+      --border: #E6E6E6;
+      --border-soft: #E3E8F0;
+      --success: #1FA287;
+      --warning: #F2A340;
+      --shadow: 0 18px 50px rgba(35, 32, 32, 0.08);
+      --shadow-soft: 0 10px 24px rgba(35, 32, 32, 0.06);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Manrope, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(49, 168, 224, 0.18), transparent 24%),
+        radial-gradient(circle at 85% 8%, rgba(15, 140, 199, 0.12), transparent 18%),
+        linear-gradient(180deg, #F8FBFE 0%, var(--bg) 100%);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.45) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.45) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.24), transparent 68%);
+      opacity: 0.35;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .shell {
+      padding: 24px 0 56px;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(245, 248, 251, 0.82);
+      border-bottom: 1px solid rgba(227, 232, 240, 0.9);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+    }
+
+    .header-inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 14px 0 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .identity {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 16px;
+    }
+
+    .identity strong {
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .identity .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--ink-mid);
+      font-size: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.8);
+      color: var(--ink-mid);
+      font-size: 13px;
+      box-shadow: 0 8px 18px rgba(35, 32, 32, 0.04);
+    }
+
+    .pill.live::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #FF4F58;
+      box-shadow: 0 0 0 5px rgba(255, 79, 88, 0.16);
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 2px;
+    }
+
+    .nav button,
+    .subnav button {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-mid);
+      font: inherit;
+      cursor: pointer;
+      transition: all 180ms ease;
+    }
+
+    .nav button {
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.8);
+      border-color: var(--border-soft);
+      box-shadow: 0 8px 18px rgba(35, 32, 32, 0.04);
+      font-weight: 700;
+    }
+
+    .nav button:hover,
+    .nav button[aria-selected="true"] {
+      color: var(--ink-strong);
+      border-color: rgba(49, 168, 224, 0.28);
+      background: linear-gradient(180deg, rgba(221, 244, 255, 0.95), rgba(255,255,255,0.92));
+      transform: translateY(-1px);
+      box-shadow: 0 14px 24px rgba(49, 168, 224, 0.13);
+    }
+
+    .hero {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .section-card,
+    .trace-card,
+    .analysis-card,
+    .figure-card {
+      background: var(--surface);
+      border: 1px solid rgba(227, 232, 240, 0.92);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-card {
+      padding: 28px;
+      min-height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% -24% auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(49,168,224,0.18), transparent 68%);
+      filter: blur(4px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-strong);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 3px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-strong));
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      margin-bottom: 14px;
+    }
+
+    .hero p {
+      color: var(--ink-mid);
+      line-height: 1.65;
+      font-size: 16px;
+      margin-bottom: 18px;
+    }
+
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .fact {
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--border-soft);
+    }
+
+    .fact span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .fact strong {
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    .hero-aside {
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero-aside .card {
+      padding: 20px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,251,255,0.86));
+      border: 1px solid rgba(227, 232, 240, 0.95);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-aside h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-aside ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    .tabs-shell {
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: var(--radius-xl);
+      background: rgba(255,255,255,0.66);
+      border: 1px solid rgba(227, 232, 240, 0.92);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .panel {
+      display: none;
+      animation: fadeUp 320ms ease;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .page-title {
+      font-size: clamp(26px, 3vw, 38px);
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .page-intro {
+      color: var(--ink-mid);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      max-width: 90ch;
+    }
+
+    .section-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .section-card {
+      padding: 22px;
+    }
+
+    .section-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-card p,
+    .section-card li,
+    .trace-card p,
+    .analysis-card p,
+    .analysis-card li {
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    .list-clean {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .highlight {
+      color: var(--primary-strong);
+      font-weight: 800;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.96);
+      font-size: 13px;
+      color: var(--ink-mid);
+      box-shadow: 0 8px 20px rgba(35, 32, 32, 0.04);
+    }
+
+    .tag strong { color: var(--ink); }
+    .tag.primary { background: linear-gradient(180deg, #EAF8FF, #FFFFFF); }
+    .tag.success { background: linear-gradient(180deg, #EAF9F5, #FFFFFF); }
+    .tag.warning { background: linear-gradient(180deg, #FFF8E9, #FFFFFF); }
+
+    .subnav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 8px 0 18px;
+    }
+
+    .subnav button {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,0.72);
+      font-weight: 700;
+      color: var(--ink-mid);
+    }
+
+    .subnav button:hover,
+    .subnav button[aria-selected="true"] {
+      color: var(--ink-strong);
+      background: linear-gradient(180deg, #DDF4FF, #FFFFFF);
+      border-color: rgba(49, 168, 224, 0.35);
+      box-shadow: 0 12px 22px rgba(49, 168, 224, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .subpanel {
+      display: none;
+    }
+
+    .subpanel.active {
+      display: block;
+    }
+
+    .subgrid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .trace-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .trace-card,
+    .analysis-card {
+      padding: 20px;
+    }
+
+    .trace-card h4,
+    .analysis-card h4 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .figure-card {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .figure-placeholder {
+      min-height: 180px;
+      border-radius: var(--radius-md);
+      border: 1px dashed rgba(49, 168, 224, 0.45);
+      background:
+        linear-gradient(135deg, rgba(221,244,255,0.6), rgba(255,255,255,0.95)),
+        repeating-linear-gradient(135deg, rgba(49,168,224,0.06), rgba(49,168,224,0.06) 10px, rgba(255,255,255,0.12) 10px, rgba(255,255,255,0.12) 20px);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: var(--ink-mid);
+      padding: 20px;
+    }
+
+    .figure-placeholder img {
+      max-width: 420px;
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      object-fit: contain;
+      max-height: 320px;
+      margin: 0 auto;
+      cursor: zoom-in;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    .figure-placeholder a { display: block; text-align: center; }
+
+    .figure-placeholder strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .figure-caption {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .callout {
+      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      background: rgba(221, 244, 255, 0.55);
+      border: 1px solid rgba(49, 168, 224, 0.18);
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    .callout strong {
+      color: var(--ink);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.84);
+      border: 1px solid var(--border-soft);
+    }
+
+    .timeline-item span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(49, 168, 224, 0.12);
+      color: var(--primary-strong);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .timeline-item h5 {
+      margin: 2px 0 6px;
+      font-size: 16px;
+    }
+
+    .footer {
+      padding: 18px 0 44px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .footer .container {
+      display: grid;
+      gap: 8px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .trace-grid,
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container,
+      .header-inner {
+        width: min(var(--max), calc(100% - 24px));
+      }
+
+      .shell { padding-top: 16px; }
+      .hero-card, .section-card, .trace-card, .analysis-card, .figure-card { border-radius: 18px; }
+      .hero-card { padding: 22px; }
+      .quick-facts { grid-template-columns: 1fr; }
+      .nav { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
+      .nav button { white-space: nowrap; }
+      .tabs-shell { padding: 16px; }
+      .page-title { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="identity">
+        <strong>Portfolio BUT2 - Fréquence Amitié</strong>
+        <div class="meta">
+          <span class="pill">Stage / projet mobile</span>
+          <span class="pill live">Projet radio mobile</span>
+          <span class="pill">Android Kotlin</span>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Navigation principale" data-nav>
+        <button type="button" data-target="accueil" aria-selected="true">Accueil</button>
+        <button type="button" data-target="technique" aria-selected="false">Technique</button>
+        <button type="button" data-target="suivi" aria-selected="false">Suivi de projet</button>
+        <button type="button" data-target="entreprise" aria-selected="false">Intégration en entreprise</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <div class="container">
+      <section class="hero">
+        <article class="hero-card">
+          <div class="eyebrow">Portfolio dédié au projet</div>
+          <h1>Application mobile Fréquence Amitié</h1>
+          <p>
+            Cette fiche portfolio présente un projet complet d’application Android réalisée pour une radio web.
+            Elle met en valeur la structure de l’interface, l’intégration backend, la gestion des notifications,
+            la lecture audio et l’organisation du travail de développement.
+          </p>
+          <p>
+            Cette page a été structurée pour un portfolio BUT2 avec une page d’accueil, trois pages principales
+            complémentaires et des sous-parties consacrées aux traces techniques ainsi qu’au bilan des savoir-faire.
+          </p>
+          <div class="quick-facts">
+            <div class="fact">
+              <span>Technologie principale</span>
+              <strong>Android Kotlin / Jetpack Compose</strong>
+            </div>
+            <div class="fact">
+              <span>Backend</span>
+              <strong>API PHP OVH + MySQL</strong>
+            </div>
+            <div class="fact">
+              <span>Fonctionnalités clés</span>
+              <strong>Direct, podcasts, recherche, compte</strong>
+            </div>
+            <div class="fact">
+              <span>Axes de valeur</span>
+              <strong>UX, architecture, intégration, validation</strong>
+            </div>
+          </div>
+        </article>
+
+        <aside class="hero-aside">
+          <div class="card">
+            <h2>Ce que cette page couvre</h2>
+            <ul>
+              <li>Le contexte entreprise et le contexte du sujet.</li>
+              <li>Les compétences générales mobilisées.</li>
+              <li>Les traces techniques et le bilan associé.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h2>Repères utiles</h2>
+            <ul>
+              <li>Les captures d’écran sont intégrées dans les emplacements prévus.</li>
+              <li>Les légendes ont été rédigées pour accompagner chaque trace.</li>
+              <li>La page peut ensuite être exportée pour remise au format attendu.</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+
+      <section class="tabs-shell">
+        <div id="accueil" class="panel active">
+          <div class="page-title">Accueil</div>
+          <p class="page-intro">
+            Cette première page présente le projet dans son ensemble. Elle explique le contexte de la mission,
+            les besoins de l’entreprise et les compétences générales mises en jeu. Le projet consiste à concevoir
+            et faire évoluer une application mobile de radio web structurée autour de cinq onglets: Accueil,
+            Podcasts, Direct, Recherche et Compte.
+          </p>
+
+          <div class="section-grid">
+            <article class="section-card">
+              <h3>Contexte entreprise</h3>
+              <p>
+                Le projet s’inscrit dans l’environnement de <strong>Fréquence Amitié</strong>, avec une logique de
+                service mobile connecté à l’écosystème de la radio. L’application doit permettre à l’utilisateur de
+                retrouver rapidement le direct, les podcasts, la recherche de contenus et la gestion de son compte.
+              </p>
+              <ul class="list-clean">
+                <li>Interactions régulières avec l’équipe ou le tuteur de projet.</li>
+                <li>Utilisation d’un backend partagé pour garder une cohérence entre les supports.</li>
+                <li>Travail avec des contraintes de déploiement, de contenu et de disponibilité du service.</li>
+              </ul>
+            </article>
+
+            <article class="section-card">
+              <h3>Contexte du sujet</h3>
+              <p>
+                Le besoin initial porte sur une application qui centralise la diffusion radio, l’accès aux émissions
+                disponibles et la relation avec l’audience. Le sujet répond à un problème concret: offrir un point
+                d’accès mobile clair, rapide et stable, capable de fonctionner avec des contenus dynamiques et des
+                notifications liées à l’actualité de la radio.
+              </p>
+              <ul class="list-clean">
+                <li>Navigation simple et lisible sur mobile.</li>
+                <li>Lecture audio et accès au direct.</li>
+                <li>Connexion aux données du site / backend.</li>
+                <li>Préparation d’un socle solide pour les évolutions futures.</li>
+              </ul>
+            </article>
+
+            <article class="section-card">
+              <h3>Savoir-faire généraux mobilisés</h3>
+              <p>
+                Ce projet met en avant plusieurs compétences transversales: <span class="highlight">synthèse</span>,
+                <span class="highlight">organisation</span>, <span class="highlight">autonomie</span>,
+                <span class="highlight">communication</span>, <span class="highlight">qualité logicielle</span> et
+                  <span class="highlight">structuration de l’application</span>. Les compétences les plus détaillées dans
+                les pages suivantes sont mises en évidence pour faciliter la lecture du portfolio.
+              </p>
+              <div class="skill-tags">
+                <span class="tag primary"><strong>Architecture</strong> d’interface</span>
+                <span class="tag primary"><strong>Navigation</strong> mobile</span>
+                <span class="tag success"><strong>API</strong> & backend</span>
+                <span class="tag success"><strong>Notifications</strong> et compte</span>
+                <span class="tag warning"><strong>Validation</strong> et tests</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div id="technique" class="panel">
+          <div class="page-title">Technique</div>
+          <p class="page-intro">
+            Cette page regroupe les traces techniques les plus pertinentes à partir du code réellement livré dans
+            l’application. Les exemples ci-dessous s’appuient sur la navigation principale, les écrans de contenu,
+            l’architecture auth, la lecture audio, les recherches et le système de notifications.
+          </p>
+
+          <div class="subnav" data-subnav="technique">
+            <button type="button" data-target="technique-description" aria-selected="true">Description</button>
+            <button type="button" data-target="technique-bilan" aria-selected="false">Bilan / analyse</button>
+          </div>
+
+          <div id="technique-description" class="subpanel active">
+            <div class="subgrid">
+              <article class="section-card">
+                <h3>Analyse 1 - MainActivity, AppDestination et navigation principale</h3>
+                <p>
+                  Cette trace correspond au cœur de l’application: <strong>MainActivity</strong> initialise le thème,
+                  l’authentification, les viewmodels partagés et le <strong>NavHost</strong>. L’énumération
+                  <strong>AppDestination</strong> définit les routes principales et les routes de détail, tandis que
+                  <strong>MainTabs</strong> fixe l’ordre des 5 onglets visibles dans la barre de navigation.
+                </p>
+                <div class="analysis-grid">
+                  <div class="callout">
+                    <strong>Apports observés</strong><br>
+                    La structure générale de l’application, la gestion des routes principales et secondaires, le
+                    retour au bon onglet actif et la capacité à conserver une navigation stable même avec des écrans
+                    de détail comme programme, émission, épisode, favoris ou paramètres.
+                  </div>
+                  <div class="callout">
+                    <strong>Compétences mobilisées</strong><br>
+                    Architecture d’écran, navigation Compose, structuration des routes, deep links, gestion des
+                    overlays (Onboarding / lecteur persistant), cohérence de l’interface mobile.
+                  </div>
+                </div>
+              </article>
+
+              <div class="trace-grid">
+                <article class="trace-card">
+                  <h4>Observation 1</h4>
+                  <p>
+                    La route active est recalculée à partir de <strong>resolveParentTab</strong>, ce qui permet de
+                    garder le bon onglet sélectionné même quand l’utilisateur ouvre un écran de détail.
+                  </p>
+                </article>
+                <article class="trace-card">
+                  <h4>Observation 2</h4>
+                  <p>
+                    Le flux utilise les mêmes composants d’état pour plusieurs écrans, ce qui limite les différences
+                    de comportement entre Accueil, Podcasts, Direct, Recherche et Compte.
+                  </p>
+                </article>
+                <article class="trace-card">
+                  <h4>Observation 3</h4>
+                  <p>
+                    L’application gère déjà des destinations détaillées comme <strong>programme</strong>,
+                    <strong>emission</strong>, <strong>episode</strong>, <strong>replays</strong> ou
+                    <strong>parametres</strong>, ce qui montre une navigation plus riche qu’un simple prototype.
+                  </p>
+                </article>
+              </div>
+
+              <div class="section-card" style="margin-top:16px;">
+                <h4>Capture associée</h4>
+                <div class="figure-placeholder">
+                  <a href="portfolio_images/capture1.png" target="_blank" rel="noopener">
+                    <img src="portfolio_images/capture1.png" alt="Capture 1 — Navigation principale">
+                  </a>
+                </div>
+                <div class="figure-caption">
+                  Légende: “Navigation principale de l’application avec les 5 onglets et les écrans de détail reliés au même NavHost.”
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="technique-bilan" class="subpanel">
+            <div class="analysis-grid">
+              <article class="analysis-card">
+                <h4>Bilan sur l’architecture mobile</h4>
+                <p>
+                  J’ai renforcé ma capacité à organiser une application autour d’une structure claire et réutilisable.
+                  Le contexte d’utilisation est concret: un utilisateur veut accéder vite au direct, aux podcasts, à
+                  la recherche ou au compte. La difficulté principale vient du fait qu’il faut garder une interface
+                  compacte tout en affichant plusieurs flux et plusieurs destinations.
+                </p>
+                <ul class="list-clean">
+                  <li>Avant le projet: navigation plus simple, avec moins de routes et moins d’états partagés.</li>
+                  <li>Pendant le projet: meilleure maîtrise de la hiérarchie visuelle et du routage Compose.</li>
+                  <li>Après le projet: capacité à concevoir un socle stable pour des écrans de détail et des overlays.</li>
+                </ul>
+              </article>
+
+              <article class="analysis-card">
+                <h4>Niveau d’expertise estimé</h4>
+                <p>
+                  Je m’évalue à un niveau <strong>bon à très bon</strong> sur la structuration d’écrans et la navigation
+                  principale, avec encore une marge de progression sur les variantes complexes et les états avancés.
+                  L’expérience du projet m’a permis de passer d’une approche surtout fonctionnelle à une approche plus
+                  rigoureuse, orientée usage, cohérence globale et gestion de plusieurs modules métiers.
+                </p>
+                <div class="callout">
+                  <strong>Apport méthodologique</strong><br>
+                  Le projet a permis d’adopter une approche plus structurée de la navigation, de la modularité et de
+                  la conception d’interfaces orientées usage.
+                </div>
+              </article>
+            </div>
+
+            <div class="section-card" style="margin-top:16px;">
+              <h3>Analyse 2 - Authentification hybride, compte et notifications Firebase</h3>
+              <p>
+                Cette trace présente les modules les plus sensibles du projet: connexion au compte, sauvegarde de la
+                session, gestion du profil, récupération du contenu utilisateur et traitement des notifications. Le
+                travail a relié l’application Android à une architecture hybride avec <strong>LocalAuthRepository</strong>,
+                <strong>RemoteAuthRepository</strong>, <strong>HybridAuthRepository</strong> et <strong>SecureAuthTokenStore</strong>.
+              </p>
+              <div class="analysis-grid">
+                <div class="callout">
+                  <strong>Apports observés</strong><br>
+                  Les validations de formulaire, la gestion de la session, le passage entre login, register,
+                  forgot-password et profil, ainsi que les notifications qui ouvrent soit l’application soit une URL
+                  ciblée via <strong>RadioFirebaseMessagingService</strong>.
+                </div>
+                <div class="callout">
+                  <strong>Compétences mobilisées</strong><br>
+                  Intégration API, validation des données, gestion sécurisée du token, logique de fallback local,
+                  traitement des notifications et cohérence des états utilisateur.
+                </div>
+              </div>
+              <div class="section-card" style="margin-top:16px;">
+                <h4>Capture associée</h4>
+                <div class="figure-placeholder">
+                  <a href="portfolio_images/capture2.png" target="_blank" rel="noopener">
+                    <img src="portfolio_images/capture2.png" alt="Capture 2 — Authentification hybride">
+                  </a>
+                </div>
+                <div class="figure-caption">
+                  Légende: “Interface d’authentification hybride — login, fallback local et gestion des états de compte.”
+                </div>
+              </div>
+            </div>
+
+            <div class="section-card">
+              <h3>Analyse 3 - Accueil, podcasts, recherche et lecture audio</h3>
+              <p>
+                Cette trace illustre la partie métier la plus visible pour l’utilisateur: lecture du direct, accès aux
+                podcasts, consultation des articles éditoriaux et recherche transverse. Le projet s’appuie sur des
+                écrans dédiés comme <strong>AccueilScreen</strong>, <strong>PodcastsScreen</strong>,
+                <strong>DirectScreen</strong>, <strong>RechercheScreen</strong> et <strong>CompteScreen</strong>.
+              </p>
+              <div class="analysis-grid">
+                <div class="callout">
+                  <strong>Apports observés</strong><br>
+                  La capacité à regrouper sur l’accueil les bannières, les articles, les recommandations de podcasts,
+                  les morceaux récents, les accès rapides et le lecteur radio persistant.
+                </div>
+                <div class="callout">
+                  <strong>Compétences mobilisées</strong><br>
+                  Hiérarchisation de contenu, chargement de données éditoriales, filtrage des podcasts, recherche par
+                  filtres et tri, gestion d’un lecteur audio et de ses états.
+                </div>
+              </div>
+              <div class="section-card" style="margin-top:16px;">
+                <h4>Capture associée</h4>
+                <div class="figure-placeholder">
+                  <a href="portfolio_images/capture3.png" target="_blank" rel="noopener">
+                    <img src="portfolio_images/capture3.png" alt="Capture 3 — Page Recherche">
+                  </a>
+                </div>
+                <div class="figure-caption">
+                  Légende: “Vue Recherche de l’application montrant les résultats, filtres et suggestions.”
+                </div>
+              </div>
+            </div>
+
+            <div class="section-card">
+              <h3>Analyse 4 - API, backend PHP OVH et persistance des données</h3>
+              <p>
+                Cette trace couvre la partie intégration serveur du projet. Dans <strong>MainActivity</strong>,
+                l’application instancie plusieurs clients Retrofit via <strong>ApiClientFactory</strong> pour
+                <strong>AuthApi</strong>, <strong>ContentApi</strong> et <strong>ListeningTrackingApi</strong>, avec
+                des caches HTTP dédiés et un ajout automatique du jeton Bearer quand il est disponible.
+              </p>
+              <div class="analysis-grid">
+                <div class="callout">
+                  <strong>Apports observés</strong><br>
+                  Le lien entre le front Android et les endpoints du backend: articles, bannières, podcasts,
+                  commentaires, likes, abonnements aux émissions et suivi d’écoute. La partie serveur est exposée via
+                  l’API PHP hébergée sur OVH, avec une base MySQL structurée par des tables comme
+                  <strong>editorial_articles</strong>, <strong>editorial_banners</strong> et
+                  <strong>podcast_comments</strong>.
+                </div>
+                <div class="callout">
+                  <strong>Compétences mobilisées</strong><br>
+                  Gestion d’API REST, structuration des DTO, authentification, gestion des caches, lecture/écriture en
+                  base et supervision des flux de données entre mobile et serveur.
+                </div>
+              </div>
+              <ul class="list-clean" style="margin-top: 14px;">
+                <li><strong>Endpoints utilisés:</strong> <code>content/articles</code>, <code>content/banners</code>, <code>podcasts/emissions</code>, <code>programmes/weekly</code>, <code>api/track-listening.php</code>.</li>
+                <li><strong>Backend associé:</strong> dossier <code>ovh-api</code> avec configuration OVH, MySQL et vérification de santé via <code>/health</code>.</li>
+                <li><strong>Persistance locale:</strong> caches HTTP, stockage du token, historique d’écoute, préférences podcasts et données utilisateur.</li>
+              </ul>
+              <div class="section-card" style="margin-top:16px;">
+                <h4>Capture associée</h4>
+                <div class="figure-placeholder">
+                  <a href="portfolio_images/capture4.png" target="_blank" rel="noopener">
+                    <img src="portfolio_images/capture4.png" alt="Capture 4 — Backend API et health check">
+                  </a>
+                </div>
+                <div class="figure-caption">
+                  Légende: “Réponse du endpoint /health du backend OVH, confirmant que le service est opérationnel avec un statut ok.”
+                </div>
+              </div>
+            </div>
+
+            <div class="section-card">
+              <h3>Analyse 5 - Déploiement OVH, configuration serveur et mise en production</h3>
+              <p>
+                Cette trace documente la mise en ligne du backend. Le dossier <strong>ovh-api</strong> est prévu pour un
+                hébergement OVH mutualisé: sous-domaine dédié, pointage du multisite vers <code>ovh-api/public</code>,
+                copie du fichier de configuration et mise en place des identifiants MySQL et du secret JWT.
+              </p>
+              <div class="analysis-grid">
+                <div class="callout">
+                  <strong>Apports observés</strong><br>
+                  La capacité à préparer un environnement de production avec une URL publique, un endpoint de santé,
+                  des tables MySQL déjà créées et une adresse dédiée à l’application Android.
+                </div>
+                <div class="callout">
+                  <strong>Compétences mobilisées</strong><br>
+                  Déploiement web, configuration d’hébergement, vérification de disponibilité, gestion des accès et
+                  passage du développement local à un service consommable par le mobile.
+                </div>
+              </div>
+              <ul class="list-clean" style="margin-top: 14px;">
+                <li><strong>Infrastructure:</strong> sous-domaine dédié <code>api-app.frequenceamitievesoul.fr</code> et hébergement OVH mutualisé.</li>
+                <li><strong>Pré-requis serveur:</strong> PHP 8.1+, PDO MySQL, fichier <code>src/config.php</code> et tables SQL initialisées.</li>
+                <li><strong>Contrôle:</strong> endpoint <code>/health</code> pour valider rapidement l’état de l’API avant l’usage dans l’application.</li>
+              </ul>
+              <div class="section-card" style="margin-top:16px;">
+                <h4>Capture associée</h4>
+                <div class="figure-placeholder">
+                  <a href="portfolio_images/capture5.png" target="_blank" rel="noopener">
+                    <img src="portfolio_images/capture5.png" alt="Capture 5 — Déploiement OVH et config serveur">
+                  </a>
+                </div>
+                <div class="figure-caption">
+                  Légende: “Préparation et validation du backend en environnement d’hébergement OVH avec contrôle de disponibilité du service.”
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="suivi" class="panel">
+          <div class="page-title">Suivi de projet</div>
+          <p class="page-intro">
+            Cette page met en évidence la façon dont le projet a été suivi: cadrage, avancement, arbitrages et
+            validation. Elle permet aussi de montrer la capacité à structurer proprement un projet conçu à partir de
+            zéro et à
+            documenter les choix faits au fil du développement.
+          </p>
+
+          <div class="subnav" data-subnav="suivi">
+            <button type="button" data-target="suivi-cadrage" aria-selected="true">Cadrage</button>
+            <button type="button" data-target="suivi-iteration" aria-selected="false">Itérations</button>
+            <button type="button" data-target="suivi-validation" aria-selected="false">Validation</button>
+          </div>
+
+          <div id="suivi-cadrage" class="subpanel active">
+            <div class="section-grid">
+              <article class="section-card">
+                <h3>Phase de cadrage</h3>
+                <p>
+                  Le travail a commencé par l’identification des besoins prioritaires: quelles pages afficher, quelles
+                  informations rendre visibles immédiatement, et quels éléments doivent rester disponibles en permanence.
+                  Cette phase a permis de fixer une base claire avant de passer au développement détaillé.
+                </p>
+                <div class="timeline">
+                  <div class="timeline-item">
+                    <span>01</span>
+                    <div>
+                      <h5>Clarification du besoin</h5>
+                      <p>Définir les écrans indispensables et les fonctionnalités les plus utiles à l’audience.</p>
+                    </div>
+                  </div>
+                  <div class="timeline-item">
+                    <span>02</span>
+                    <div>
+                      <h5>Choix de structure</h5>
+                      <p>Organiser l’application autour d’une navigation stable et de contenus courts, faciles à parcourir.</p>
+                    </div>
+                  </div>
+                  <div class="timeline-item">
+                    <span>03</span>
+                    <div>
+                      <h5>Préparation des bases techniques</h5>
+                      <p>Mettre en place la palette, les composants communs et les points d’intégration serveur.</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div id="suivi-iteration" class="subpanel">
+            <div class="section-grid">
+              <article class="section-card">
+                <h3>Phase d’itération</h3>
+                <p>
+                  Le développement s’est fait par blocs fonctionnels: écran principal, lecture audio, recherche,
+                  notifications, compte et intégration backend. Cette méthode a permis d’avancer sans bloquer le reste
+                  de l’application et de tester régulièrement les résultats.
+                </p>
+                <div class="analysis-grid">
+                  <div class="callout">
+                    <strong>Organisation du travail</strong><br>
+                    Découpage en petites tâches, vérification fréquente et correction rapide des points fragiles.
+                  </div>
+                  <div class="callout">
+                    <strong>Intérêt du découpage</strong><br>
+                    Cette approche limite les régressions et rend le projet plus lisible, surtout quand plusieurs sujets
+                    techniques coexistent.
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div id="suivi-validation" class="subpanel">
+            <div class="section-grid">
+              <article class="section-card">
+                <h3>Phase de validation</h3>
+                <p>
+                  La validation a porté sur la lisibilité de l’interface, le comportement de navigation, la cohérence
+                  des couleurs, le bon fonctionnement des flux de données et l’absence d’erreurs visibles dans les
+                  scénarios principaux. Les tests permettent de sécuriser le passage vers une version plus complète ou
+                  une mise à jour future.
+                </p>
+                <ul class="list-clean">
+                  <li>Vérification des écrans sur mobile compact.</li>
+                  <li>Contrôle de la cohérence visuelle entre les onglets.</li>
+                  <li>Tests des cas importants: connexion, direct, recherche, notifications.</li>
+                </ul>
+              </article>
+
+              <article class="section-card">
+                <h3>Bilan de suivi de projet</h3>
+                <p>
+                  Ce projet m’a appris à gérer un périmètre fonctionnel avec méthode, à prioriser les éléments visibles
+                  pour l’utilisateur et à accepter de revenir sur une partie déjà faite si cela améliore la cohérence
+                  d’ensemble. J’ai progressé sur la notion de livrable: ce qui compte n’est pas seulement d’avoir du code,
+                  mais d’avoir un ensemble compréhensible, testable et maintenable.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div id="entreprise" class="panel">
+          <div class="page-title">Intégration en entreprise</div>
+          <p class="page-intro">
+            Cette dernière page valorise l’intégration dans l’environnement professionnel: relation avec le cadre de
+            travail, adaptation aux contraintes techniques et capacité à produire quelque chose de propre dans un
+            contexte réel. Elle permet aussi de faire le lien entre les attentes de l’entreprise et ce qui a été livré.
+          </p>
+
+          <div class="subnav" data-subnav="entreprise">
+            <button type="button" data-target="entreprise-contexte" aria-selected="true">Contexte</button>
+            <button type="button" data-target="entreprise-posture" aria-selected="false">Posture professionnelle</button>
+            <button type="button" data-target="entreprise-bilan" aria-selected="false">Bilan</button>
+          </div>
+
+          <div id="entreprise-contexte" class="subpanel active">
+            <div class="section-grid">
+              <article class="section-card">
+                <h3>Contexte de travail</h3>
+                <p>
+                  Le projet s’inscrit dans un environnement où plusieurs briques coexistent: application mobile,
+                  backend PHP, base MySQL, contenus radio et notifications. L’enjeu consiste à faire tenir tout cela
+                  dans une expérience simple pour l’utilisateur final.
+                </p>
+                <div class="analysis-grid">
+                  <div class="callout">
+                    <strong>Ce que l’environnement impose</strong><br>
+                    Des choix cohérents entre support mobile, API et hébergement, avec une attention particulière à la
+                    stabilité du service.
+                  </div>
+                  <div class="callout">
+                    <strong>Ce que j’ai appris du contexte</strong><br>
+                    À ne pas isoler le mobile du reste du système, et à penser l’application comme une partie d’un
+                    ensemble plus large.
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div id="entreprise-posture" class="subpanel">
+            <div class="analysis-grid">
+              <article class="analysis-card">
+                <h4>Posture adoptée</h4>
+                <p>
+                  J’ai cherché à travailler avec une logique de fiabilité: structurer le projet dès son origine,
+                  documenter les points importants et garder un style cohérent. Dans un cadre professionnel, cette
+                  attitude est essentielle pour limiter les incohérences et faciliter la maintenance par une autre
+                  personne.
+                </p>
+                <ul class="list-clean">
+                  <li>Respect des conventions déjà en place.</li>
+                  <li>Documentation des choix techniques.</li>
+                  <li>Recherche de cohérence avec l’identité de la radio.</li>
+                </ul>
+              </article>
+
+              <article class="analysis-card">
+                <h4>Compétences professionnelles</h4>
+                <p>
+                  Le projet m’a permis de renforcer mon autonomie, mon sens de l’organisation et ma capacité à
+                  échanger autour d’un besoin fonctionnel. J’ai également progressé dans la manière de présenter un
+                  travail technique à travers un support de portfolio clair, lisible et orienté résultat.
+                </p>
+              </article>
+            </div>
+          </div>
+
+          <div id="entreprise-bilan" class="subpanel">
+            <div class="section-card">
+                <h3>Bilan global</h3>
+              <p>
+                À l’issue du projet, je retiens surtout la capacité à construire une application réellement utile,
+                en gardant une cohérence entre interface, données, diffusion audio et contraintes techniques. Le projet
+                montre une montée en compétence sur plusieurs plans: technique, organisationnel et professionnel.
+              </p>
+              <div class="skill-tags">
+                <span class="tag primary"><strong>Autonomie</strong> accrue</span>
+                <span class="tag primary"><strong>Architecture</strong> plus propre</span>
+                <span class="tag success"><strong>Backend</strong> mieux compris</span>
+                <span class="tag success"><strong>Interface</strong> plus lisible</span>
+                <span class="tag warning"><strong>Validation</strong> plus rigoureuse</span>
+              </div>
+              <p style="margin-top:16px;">
+                Ce projet a permis de transformer une intention fonctionnelle en livrable concret, stable et
+                exploitable dans un contexte réel, en articulant les dimensions interface, API, backend et mise en
+                production.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>
+        Eloi DUPASQUIER
+      </div>
+      <div>
+        Projet documenté: application mobile Fréquence Amitié, navigation à cinq onglets, backend PHP/OVH, notifications, audio et structuration de contenu.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const mainButtons = document.querySelectorAll('[data-nav] button');
+    const panels = document.querySelectorAll('.panel');
+
+    function setActivePanel(targetId) {
+      panels.forEach((panel) => panel.classList.toggle('active', panel.id === targetId));
+      mainButtons.forEach((button) => {
+        button.setAttribute('aria-selected', String(button.dataset.target === targetId));
+      });
+      const activePanel = document.getElementById(targetId);
+      if (activePanel) {
+        activePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    mainButtons.forEach((button) => {
+      button.addEventListener('click', () => setActivePanel(button.dataset.target));
+    });
+
+    document.querySelectorAll('[data-subnav]').forEach((nav) => {
+      const buttons = nav.querySelectorAll('button');
+      const subpanels = document.querySelectorAll('#' + nav.dataset.subnav + ' .subpanel');
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          subpanels.forEach((panel) => panel.classList.toggle('active', panel.id === button.dataset.target));
+          buttons.forEach((other) => {
+            other.setAttribute('aria-selected', String(other === button));
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
