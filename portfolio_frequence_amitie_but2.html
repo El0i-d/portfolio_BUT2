@@ -92,9 +92,19 @@
       gap: 10px 16px;
     }
 
+    .identity .person {
+      display: grid;
+      gap: 4px;
+    }
+
     .identity strong {
       font-size: 18px;
       letter-spacing: -0.02em;
+    }
+
+    .identity .contact {
+      color: var(--ink-mid);
+      font-size: 14px;
     }
 
     .identity .meta {
@@ -365,6 +375,10 @@
       margin-top: 16px;
     }
 
+    .skill-tags.compact {
+      margin-top: 12px;
+    }
+
     .tag {
       display: inline-flex;
       align-items: center;
@@ -507,6 +521,44 @@
       color: var(--ink);
     }
 
+    .trace-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(49, 168, 224, 0.12);
+      color: var(--primary-strong);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .trace-meta::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .trace-remark {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 248, 233, 0.88);
+      border: 1px solid rgba(242, 163, 64, 0.22);
+      color: var(--ink-mid);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .trace-remark strong {
+      color: var(--ink);
+    }
+
     .timeline {
       display: grid;
       gap: 14px;
@@ -596,8 +648,12 @@
   <header class="header">
     <div class="header-inner">
       <div class="identity">
-        <strong>Portfolio BUT2 - Fréquence Amitié</strong>
+        <div class="person">
+          <strong>Eloi DUPASQUIER</strong>
+          <span class="contact">Mail : eloi.dupasquier@gmail.com</span>
+        </div>
         <div class="meta">
+          <span class="pill">Portfolio BUT2</span>
           <span class="pill">Stage / projet mobile</span>
           <span class="pill live">Projet radio mobile</span>
           <span class="pill">Android Kotlin</span>
@@ -744,7 +800,24 @@
           <div id="technique-description" class="subpanel active">
             <div class="subgrid">
               <article class="section-card">
-                <h3>Analyse 1 - MainActivity, AppDestination et navigation principale</h3>
+                <h3>Savoir-faire élémentaires associés</h3>
+                <p>
+                  Les traces de cette page reposent sur quelques savoir-faire élémentaires qui reviennent dans tout
+                  le projet. Ils sont repris en couleur et reliés aux points remarquables des captures pour rendre la
+                  lecture du portfolio conforme au cours.
+                </p>
+                <div class="skill-tags compact">
+                  <span class="tag primary"><strong>Navigation</strong> et routes</span>
+                  <span class="tag primary"><strong>Architecture</strong> d’écran</span>
+                  <span class="tag success"><strong>API</strong> et backend</span>
+                  <span class="tag success"><strong>Notifications</strong> et compte</span>
+                  <span class="tag warning"><strong>Validation</strong> et tests</span>
+                </div>
+              </article>
+
+              <article class="section-card">
+                <div class="trace-meta">Trace n°1</div>
+                <h3>MainActivity, AppDestination et navigation principale</h3>
                 <p>
                   Cette trace correspond au cœur de l’application: <strong>MainActivity</strong> initialise le thème,
                   l’authentification, les viewmodels partagés et le <strong>NavHost</strong>. L’énumération
@@ -763,6 +836,10 @@
                     Architecture d’écran, navigation Compose, structuration des routes, deep links, gestion des
                     overlays (Onboarding / lecteur persistant), cohérence de l’interface mobile.
                   </div>
+                </div>
+                <div class="trace-remark">
+                  <strong>Point remarquable à repérer :</strong> la zone de navigation et le bon onglet actif, mis en
+                  évidence dans la capture par l’organisation générale de l’écran.
                 </div>
               </article>
 
@@ -839,7 +916,8 @@
             </div>
 
             <div class="section-card" style="margin-top:16px;">
-              <h3>Analyse 2 - Authentification hybride, compte et notifications Firebase</h3>
+              <div class="trace-meta">Trace n°2</div>
+              <h3>Authentification hybride, compte et notifications Firebase</h3>
               <p>
                 Cette trace présente les modules les plus sensibles du projet: connexion au compte, sauvegarde de la
                 session, gestion du profil, récupération du contenu utilisateur et traitement des notifications. Le
@@ -859,6 +937,10 @@
                   traitement des notifications et cohérence des états utilisateur.
                 </div>
               </div>
+              <div class="trace-remark">
+                <strong>Point remarquable à repérer :</strong> le formulaire d’authentification, le passage entre les
+                états de connexion et les actions de compte, visibles dans la capture.
+              </div>
               <div class="section-card" style="margin-top:16px;">
                 <h4>Capture associée</h4>
                 <div class="figure-placeholder">
@@ -873,7 +955,8 @@
             </div>
 
             <div class="section-card">
-              <h3>Analyse 3 - Accueil, podcasts, recherche et lecture audio</h3>
+              <div class="trace-meta">Trace n°3</div>
+              <h3>Accueil, podcasts, recherche et lecture audio</h3>
               <p>
                 Cette trace illustre la partie métier la plus visible pour l’utilisateur: lecture du direct, accès aux
                 podcasts, consultation des articles éditoriaux et recherche transverse. Le projet s’appuie sur des
@@ -892,6 +975,10 @@
                   filtres et tri, gestion d’un lecteur audio et de ses états.
                 </div>
               </div>
+              <div class="trace-remark">
+                <strong>Point remarquable à repérer :</strong> le lecteur persistant, la zone de recommandations et
+                la barre de navigation principale en bas de l’écran.
+              </div>
               <div class="section-card" style="margin-top:16px;">
                 <h4>Capture associée</h4>
                 <div class="figure-placeholder">
@@ -906,7 +993,8 @@
             </div>
 
             <div class="section-card">
-              <h3>Analyse 4 - API, backend PHP OVH et persistance des données</h3>
+              <div class="trace-meta">Trace n°4</div>
+              <h3>API, backend PHP OVH et persistance des données</h3>
               <p>
                 Cette trace couvre la partie intégration serveur du projet. Dans <strong>MainActivity</strong>,
                 l’application instancie plusieurs clients Retrofit via <strong>ApiClientFactory</strong> pour
@@ -933,6 +1021,10 @@
                 <li><strong>Backend associé:</strong> dossier <code>ovh-api</code> avec configuration OVH, MySQL et vérification de santé via <code>/health</code>.</li>
                 <li><strong>Persistance locale:</strong> caches HTTP, stockage du token, historique d’écoute, préférences podcasts et données utilisateur.</li>
               </ul>
+              <div class="trace-remark">
+                <strong>Point remarquable à repérer :</strong> la réponse du service de santé et la cohérence entre
+                l’API mobile et le backend OVH/MySQL.
+              </div>
               <div class="section-card" style="margin-top:16px;">
                 <h4>Capture associée</h4>
                 <div class="figure-placeholder">
@@ -947,7 +1039,8 @@
             </div>
 
             <div class="section-card">
-              <h3>Analyse 5 - Déploiement OVH, configuration serveur et mise en production</h3>
+              <div class="trace-meta">Trace n°5</div>
+              <h3>Déploiement OVH, configuration serveur et mise en production</h3>
               <p>
                 Cette trace documente la mise en ligne du backend. Le dossier <strong>ovh-api</strong> est prévu pour un
                 hébergement OVH mutualisé: sous-domaine dédié, pointage du multisite vers <code>ovh-api/public</code>,
@@ -970,6 +1063,10 @@
                 <li><strong>Pré-requis serveur:</strong> PHP 8.1+, PDO MySQL, fichier <code>src/config.php</code> et tables SQL initialisées.</li>
                 <li><strong>Contrôle:</strong> endpoint <code>/health</code> pour valider rapidement l’état de l’API avant l’usage dans l’application.</li>
               </ul>
+              <div class="trace-remark">
+                <strong>Point remarquable à repérer :</strong> le lien entre le répertoire de déploiement, la
+                configuration serveur et la vérification de disponibilité avant mise en production.
+              </div>
               <div class="section-card" style="margin-top:16px;">
                 <h4>Capture associée</h4>
                 <div class="figure-placeholder">
